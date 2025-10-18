@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using PRM392_API.Models;
 using PRM392_API.ProgramConfig;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,10 @@ builder.Services.AddMyServices2();
 builder.Services.AddMyServices3();
 builder.Services.AddMyServices4();
 builder.Services.AddMyServices5();
+builder.Services.AddDbContext<PRM392Context>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 builder.Services.AddCors(options =>
 {
