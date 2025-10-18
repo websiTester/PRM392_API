@@ -2,6 +2,6 @@
 {
 	public interface IAccountRepository
 	{
-		public bool Login(string username, string password);
+		public Task<bool> Login(string username, string password);
 	}
 }
