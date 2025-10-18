@@ -1,7 +1,7 @@
 ﻿using PRM392_API.Models;
-using PRM392_API.Repository.Interfaces;
+using PRM392_API.Repositories.Interface;
 
-namespace PRM392_API.Repository.Implementations
+namespace PRM392_API.Repositories.Implementation
 {
 	public class AccountRepository : IAccountRepository
 	{

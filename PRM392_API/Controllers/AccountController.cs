@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PRM392_API.Repository.Interfaces;
+using PRM392_API.Repositories.Interface;
 using PRM392_API.ViewModels;
 
 namespace PRM392_API.Controllers

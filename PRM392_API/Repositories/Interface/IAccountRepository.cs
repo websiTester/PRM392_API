@@ -1,4 +1,4 @@
-﻿namespace PRM392_API.Repository.Interfaces
+﻿namespace PRM392_API.Repositories.Interface
 {
 	public interface IAccountRepository
 	{

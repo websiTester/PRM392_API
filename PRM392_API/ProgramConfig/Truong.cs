@@ -1,5 +1,5 @@
-﻿using PRM392_API.Repository.Implementations;
-using PRM392_API.Repository.Interfaces;
+﻿using PRM392_API.Repositories.Implementation;
+using PRM392_API.Repositories.Interface;
 
 namespace PRM392_API.ProgramConfig
 {
