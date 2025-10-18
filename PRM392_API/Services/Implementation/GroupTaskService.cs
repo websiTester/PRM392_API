@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PRM392_API.Models;
+﻿using PRM392_API.Models;
 using PRM392_API.Repositories.Interface;
+using PRM392_API.Services.Interface;
 
-namespace PRM392_API.Repositories.Implementation
+namespace PRM392_API.Services.Implementation
 {
-    public class GroupTaskRepository : IGroupTaskRepository
+    public class GroupTaskService : IGroupTaskService
     {
-        private readonly PRM392Context _context;
-        public GroupTaskRepository(PRM392Context context)
+        private readonly IGroupTaskRepository _groupTaskRepository;
+        public GroupTaskService(IGroupTaskRepository groupTaskRepository)
         {
-            _context = context;
+            _groupTaskRepository = groupTaskRepository;
         }
         public Task<GroupTask> CreateGroupTask(GroupTask groupTask)
         {
@@ -23,7 +23,7 @@ namespace PRM392_API.Repositories.Implementation
 
         public async Task<IEnumerable<GroupTask>> GetAllGroupTasks()
         {
-           return await _context.GroupTasks.ToListAsync();
+            return await _groupTaskRepository.GetAllGroupTasks();
         }
 
         public Task<GroupTask?> GetGroupTaskById(int id)
