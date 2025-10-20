@@ -13,4 +13,5 @@
 		public virtual User? Student { get; set; }
 		public virtual User? Teacher { get; set; }
 
-	}
+    
+}
