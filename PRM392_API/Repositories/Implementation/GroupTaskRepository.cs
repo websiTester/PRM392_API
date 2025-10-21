@@ -23,7 +23,9 @@ namespace PRM392_API.Repositories.Implementation
 
         public async Task<IEnumerable<GroupTask>> GetAllGroupTasks()
         {
-           return await _context.GroupTasks.ToListAsync();
+           return await _context.GroupTasks
+                .Include(gt => gt.AssignedToNavigation)
+                .ToListAsync();
         }
 
         public Task<GroupTask?> GetGroupTaskById(int id)

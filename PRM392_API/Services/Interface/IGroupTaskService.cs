@@ -1,10 +1,11 @@
-﻿using PRM392_API.Models;
+﻿using PRM392_API.DTOs.GroupTask;
+using PRM392_API.Models;
 
 namespace PRM392_API.Services.Interface
 {
     public interface IGroupTaskService
     {
-        Task<IEnumerable<GroupTask>> GetAllGroupTasks();
+        Task<IEnumerable<GroupTaskInAssignmentDetailResponse>> GetAllGroupTasks();
         Task<GroupTask?> GetGroupTaskById(int id);
         Task<GroupTask> CreateGroupTask(GroupTask groupTask);
         Task<GroupTask?> UpdateGroupTask(GroupTask groupTask);

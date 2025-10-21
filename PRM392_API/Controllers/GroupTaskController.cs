@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using PRM392_API.Services.Interface;
+using System.Threading.Tasks;
 
 namespace PRM392_API.Controllers
 {
@@ -14,9 +15,9 @@ namespace PRM392_API.Controllers
             _groupTaskService = groupTaskService;
         }
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var groupTasks = _groupTaskService.GetAllGroupTasks();
+            var groupTasks = await _groupTaskService.GetAllGroupTasks();
             return Ok(groupTasks);
         }
     }
