@@ -15,14 +15,28 @@ namespace PRM392_API.Services.Implementation
             _groupTaskRepository = groupTaskRepository;
             _mapper = mapper;
         }
-        public Task<GroupTask> CreateGroupTask(GroupTask groupTask)
+        public async Task CreateGroupTask(AddGroupTaskRequest addGroupTaskRequest)
         {
-            throw new NotImplementedException();
+            try
+            {
+               var groupTask = _mapper.Map<GroupTask>(addGroupTaskRequest);
+               await _groupTaskRepository.CreateGroupTask(groupTask);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while creating the group task.", ex);
+            }
         }
-
-        public Task<bool> DeleteGroupTask(int id)
+        public async Task<bool> DeleteGroupTask(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _groupTaskRepository.DeleteGroupTask(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while deleting the group task.", ex);
+            }
         }
 
         public async Task<IEnumerable<GroupTaskInAssignmentDetailResponse>> GetAllGroupTasks()
@@ -39,6 +53,11 @@ namespace PRM392_API.Services.Implementation
         public Task<GroupTask?> UpdateGroupTask(GroupTask groupTask)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task UpdateGroupTaskStatus(int taskId)
+        {
+            await _groupTaskRepository.UpdateGroupTaskStatus(taskId);
         }
     }
 }

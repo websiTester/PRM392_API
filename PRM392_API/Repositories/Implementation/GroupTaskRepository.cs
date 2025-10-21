@@ -11,14 +11,15 @@ namespace PRM392_API.Repositories.Implementation
         {
             _context = context;
         }
-        public Task<GroupTask> CreateGroupTask(GroupTask groupTask)
+        public async Task CreateGroupTask(GroupTask groupTask)
         {
-            throw new NotImplementedException();
+            await _context.GroupTasks.AddAsync(groupTask);
         }
 
-        public Task<bool> DeleteGroupTask(int id)
+        public async Task<bool> DeleteGroupTask(int id)
         {
-            throw new NotImplementedException();
+            return await _context.GroupTasks.Where(gt => gt.TaskId == id)
+                .ExecuteDeleteAsync() > 0;
         }
 
         public async Task<IEnumerable<GroupTask>> GetAllGroupTasks()
@@ -36,6 +37,23 @@ namespace PRM392_API.Repositories.Implementation
         public Task<GroupTask?> UpdateGroupTask(GroupTask groupTask)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task UpdateGroupTaskStatus(int taskId)
+        {
+            var groupTask = _context.GroupTasks.Find(taskId);
+            if (groupTask != null )
+            {
+                if (groupTask.Status == "todo")
+                {
+                    groupTask.Status = "doing";
+                }
+                else if (groupTask.Status == "doing")
+                {
+                    groupTask.Status = "done";
+                }
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

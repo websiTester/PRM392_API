@@ -13,6 +13,10 @@ namespace PRM392_API.MyProfile
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Points, opt => opt.MapFrom(src => src.Points ?? 0))
                 .ForMember(dest => dest.AssignedToName, opt => opt.MapFrom(src => src.AssignedToNavigation != null ? src.AssignedToNavigation.FirstName +" "+ src.AssignedToNavigation.LastName : "Unassigned"));
+
+            CreateMap<AddGroupTaskRequest, GroupTask>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => "todo"))
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.Now));
         }
     }
 }

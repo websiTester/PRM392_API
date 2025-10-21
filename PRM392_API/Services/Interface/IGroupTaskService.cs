@@ -7,8 +7,9 @@ namespace PRM392_API.Services.Interface
     {
         Task<IEnumerable<GroupTaskInAssignmentDetailResponse>> GetAllGroupTasks();
         Task<GroupTask?> GetGroupTaskById(int id);
-        Task<GroupTask> CreateGroupTask(GroupTask groupTask);
+        Task CreateGroupTask(AddGroupTaskRequest addGroupTaskRequest);
         Task<GroupTask?> UpdateGroupTask(GroupTask groupTask);
         Task<bool> DeleteGroupTask(int id);
+        Task UpdateGroupTaskStatus(int taskId);
     }
 }

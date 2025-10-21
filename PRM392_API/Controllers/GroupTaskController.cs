@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
+using PRM392_API.DTOs.GroupTask;
 using PRM392_API.Services.Interface;
 using System.Threading.Tasks;
 
@@ -20,5 +21,29 @@ namespace PRM392_API.Controllers
             var groupTasks = await _groupTaskService.GetAllGroupTasks();
             return Ok(groupTasks);
         }
-    }
+
+        [HttpPut("UpdateGroupTaskStatus")]
+        public async Task<IActionResult> UpdateStatus([FromQuery] int id)
+        {
+            await _groupTaskService.UpdateGroupTaskStatus(id);
+            return Ok();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] AddGroupTaskRequest addGroupTaskRequest)
+        {
+            await _groupTaskService.CreateGroupTask(addGroupTaskRequest);
+            return Ok();
+        }
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromQuery] int id)
+        {
+            var result = await _groupTaskService.DeleteGroupTask(id);
+            if (result)
+            {
+                return Ok();
+            }
+            return NotFound();
+
+        }
+    } 
 }

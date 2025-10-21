@@ -6,9 +6,10 @@ namespace PRM392_API.Repositories.Interface
     {
         Task<IEnumerable<GroupTask>> GetAllGroupTasks();
         Task<GroupTask?> GetGroupTaskById(int id);
-        Task<GroupTask> CreateGroupTask(GroupTask groupTask);
+        Task CreateGroupTask(GroupTask groupTask);
         Task<GroupTask?> UpdateGroupTask(GroupTask groupTask);
         Task<bool> DeleteGroupTask(int id);
+        Task UpdateGroupTaskStatus(int taskId);
 
     }
 }
