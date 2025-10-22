@@ -12,6 +12,12 @@ namespace PRM392_API.Repositories.Implementation
 		{
 			_context = context;
 		}
+
+		public async Task<User> GetUser(string username)
+		{
+			return await _context.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
+		}
+
 		public async Task<User> Login(string username, string password)
 		{
 			User user = await _context.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower()

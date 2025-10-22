@@ -47,6 +47,11 @@ namespace PRM392_API.Controllers
 				return BadRequest("Please fill in all the input");
 			}
 
+			if(await _accountRepository.GetUser(model.Username) != null)
+			{
+				return BadRequest("Username already exists");
+			}
+
 			if(model.Password != model.ConfirmPassword)
 			{
 				return BadRequest("Password and confirm password do not match");
