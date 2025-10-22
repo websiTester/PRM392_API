@@ -16,9 +16,9 @@ namespace PRM392_API.Controllers
             _groupTaskService = groupTaskService;
         }
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] int assignmentId, [FromQuery] int groupId)
         {
-            var groupTasks = await _groupTaskService.GetAllGroupTasks();
+            var groupTasks = await _groupTaskService.GetAllGroupTasks(assignmentId, groupId);
             return Ok(groupTasks);
         }
 

@@ -5,7 +5,7 @@ namespace PRM392_API.Services.Interface
 {
     public interface IGroupTaskService
     {
-        Task<IEnumerable<GroupTaskInAssignmentDetailResponse>> GetAllGroupTasks();
+        Task<IEnumerable<GroupTaskInAssignmentDetailResponse>> GetAllGroupTasks(int assigmentId, int groupId);
         Task<GroupTask?> GetGroupTaskById(int id);
         Task CreateGroupTask(AddGroupTaskRequest addGroupTaskRequest);
         Task<GroupTask?> UpdateGroupTask(GroupTask groupTask);

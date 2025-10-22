@@ -22,10 +22,14 @@ namespace PRM392_API.Repositories.Implementation
                 .ExecuteDeleteAsync() > 0;
         }
 
-        public async Task<IEnumerable<GroupTask>> GetAllGroupTasks()
+        public async Task<IEnumerable<GroupTask>> GetAllGroupTasks(int assignmentId, int groupId)
         {
            return await _context.GroupTasks
+                .Where(gt=>gt.AssignmentId == assignmentId && gt.GroupId == groupId)
                 .Include(gt => gt.AssignedToNavigation)
+                .Include(gt => gt.Group)
+                .ThenInclude(g => g.StudentGroups)
+                .ThenInclude(sg => sg.Student)
                 .ToListAsync();
         }
 

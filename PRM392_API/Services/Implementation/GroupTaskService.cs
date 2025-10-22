@@ -39,9 +39,9 @@ namespace PRM392_API.Services.Implementation
             }
         }
 
-        public async Task<IEnumerable<GroupTaskInAssignmentDetailResponse>> GetAllGroupTasks()
+        public async Task<IEnumerable<GroupTaskInAssignmentDetailResponse>> GetAllGroupTasks(int assignmentId, int groupId)
         {
-            var groupTasks = await _groupTaskRepository.GetAllGroupTasks();
+            var groupTasks = await _groupTaskRepository.GetAllGroupTasks(assignmentId, groupId);
             return _mapper.Map<IEnumerable<GroupTaskInAssignmentDetailResponse>>(groupTasks);
         }
 
