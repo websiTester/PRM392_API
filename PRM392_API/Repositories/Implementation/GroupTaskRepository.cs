@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PRM392_API.DTOs.GroupTask;
 using PRM392_API.Models;
 using PRM392_API.Repositories.Interface;
 
@@ -14,6 +15,7 @@ namespace PRM392_API.Repositories.Implementation
         public async Task CreateGroupTask(GroupTask groupTask)
         {
             await _context.GroupTasks.AddAsync(groupTask);
+            await  _context.SaveChangesAsync();
         }
 
         public async Task<bool> DeleteGroupTask(int id)

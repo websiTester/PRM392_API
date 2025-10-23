@@ -15,7 +15,7 @@ namespace PRM392_API.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet("GetUserInGroup")]
         public async Task<IActionResult> GetUserInGroup([FromQuery]int groupId)
         {
             var users = await _userService.GetUsersByGroupId(groupId);
