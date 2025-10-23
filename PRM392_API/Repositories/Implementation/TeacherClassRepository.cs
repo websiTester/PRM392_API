@@ -21,8 +21,11 @@ namespace PRM392_API.Repositories.Implementation
 
         public Class GetClassByCode(string classCode)
         {
-            throw new NotImplementedException();
+            return _context.Classes.Where(c => c.ClassCode == classCode).Include(c => c.Course).Include(c => c.Teacher).FirstOrDefault();
+
+
         }
+
 
         public IEnumerable<Class> GetClassesByTeacherId(int teacherId)
         {

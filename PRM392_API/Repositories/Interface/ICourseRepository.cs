@@ -6,6 +6,6 @@ namespace PRM392_API.Repositories.Interface
     {
         IEnumerable<Course> GetCoursesByTeacherId(int teacherId);
         void AddCourse(Course course);
-        bool IsCourseNameExist(string name);
+        bool IsCourseNameExist(string name,int teacherId);
     }
 }

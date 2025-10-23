@@ -23,9 +23,9 @@ namespace PRM392_API.Repositories.Implementation
             _context.SaveChanges();
         }
 
-        public bool IsCourseNameExist(string name)
+        public bool IsCourseNameExist(string name, int teacherId)
         {
-            return _context.Courses.Any(c => c.Name == name);
+            return _context.Courses.Any(c => c.Name == name && c.CreateBy == teacherId);
         }
     }
 }

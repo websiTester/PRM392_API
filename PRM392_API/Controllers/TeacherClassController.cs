@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PRM392_API.Models;
 using PRM392_API.Repositories.Interface;
@@ -38,6 +39,26 @@ namespace PRM392_API.Controllers
             });
         }
 
+        [HttpPost("/Class/Create")]
+      
+        public async Task<IActionResult> Create([FromBody] CreateClassViewModel model)
+        {
+            //User user = await _userManager.GetUserAsync(User);
+            //if (user == null)
+            //{
+            //    return Unauthorized(new { success = false, message = "Bạn cần đăng nhập để tạo lớp." });
+            //}
+
+            model.TeacherId = 101;
+            var result = _classService.CreateNewClass(model);
+
+            if (result.success)
+            {
+                return Ok(new { success = true, message = result.message });
+            }
+
+            return BadRequest(new { success = false, message = result.message });
+        }
 
 
     }
