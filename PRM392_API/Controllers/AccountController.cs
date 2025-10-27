@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PRM392_API.Models;
 using PRM392_API.Repositories.Interface;
+using PRM392_API.RequestModel;
 using PRM392_API.ViewModels;
 
 namespace PRM392_API.Controllers
@@ -72,6 +73,40 @@ namespace PRM392_API.Controllers
 			{
 				return BadRequest("Register failed");
 			}
+
+		}
+
+		[HttpPut("Update")]
+		public async Task<IActionResult> UpdateUser([FromBody] LoginResult model)
+		{
+			if (!ModelState.IsValid)
+			{
+				// Authentication logic here
+				return BadRequest("Please fill in all the input");
+			}
+
+			var user = new User()
+			{
+				Username = model.Username,
+				Email = model.Email,
+				FirstName = model.Firstname,
+				LastName = model.Lastname,
+				Avatar = model.Avatar
+			};
+
+			var result = await _accountRepository.UpdateUser(user);
+
+			return Ok(result);
+
+
+			//if (result)
+			//{
+			//	return Ok("Update successfully");
+			//}
+			//else
+			//{
+			//	return BadRequest("Register failed");
+			//}
 
 		}
 

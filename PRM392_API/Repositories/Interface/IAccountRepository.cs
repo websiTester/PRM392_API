@@ -9,5 +9,7 @@ namespace PRM392_API.Repositories.Interface
 		public Task<bool> Register(User user);
 
 		public Task<User> GetUser(string username);
+
+		public Task<User> UpdateUser(User user);
 	}
 }
