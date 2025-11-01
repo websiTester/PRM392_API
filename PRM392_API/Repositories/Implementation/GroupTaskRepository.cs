@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PRM392_API.DTOs.GroupTask;
 using PRM392_API.Models;
 using PRM392_API.Repositories.Interface;
 
@@ -21,7 +20,7 @@ namespace PRM392_API.Repositories.Implementation
         public async Task<bool> DeleteGroupTask(int id)
         {
             return await _context.GroupTasks.Where(gt => gt.TaskId == id)
-                .ExecuteDeleteAsync() > 0;
+                .ExecuteDeleteAsync() > 0;  
         }
 
         public async Task<IEnumerable<GroupTask>> GetAllGroupTasks(int assignmentId, int groupId)
