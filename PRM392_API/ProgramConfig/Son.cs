@@ -13,12 +13,18 @@ namespace PRM392_API.ProgramConfig
             services.AddAutoMapper(cfg => {
                 cfg.AddProfile<GroupTaskProfile>();
 				cfg.AddProfile<UserProfile>();
+				cfg.AddProfile<PeerReviewProfile>();
+				cfg.AddProfile<AssignmentSubmissionProfile>();
             });
 
             services.AddScoped<IGroupTaskRepository,GroupTaskRepository>();
 			services.AddScoped<IGroupTaskService,GroupTaskService>();
 			services.AddScoped<IUserRepository, UserRepository>();
 			services.AddScoped<IUserService, UserService>();
+			services.AddScoped<IPeerReviewRepository, PeerReviewRepository>();
+			services.AddScoped<IPeerReviewService, PeerReviewService>();
+			services.AddScoped<IAssignmentSubmissionRepository, AssignmentSubmissionRepository>();
+			services.AddScoped<IAssignmentSubmissionService, AssignmentSubmissionService>();
             return services;
 		}
 	}
