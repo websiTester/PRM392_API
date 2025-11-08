@@ -44,7 +44,7 @@ namespace PRM392_API.Repositories.Implementation
             throw new NotImplementedException();
         }
 
-        public async Task UpdateGroupTaskStatus(int taskId)
+        public async Task UpdateGroupTaskStatus(int taskId, bool isUp)
         {
             var groupTask = _context.GroupTasks.Find(taskId);
             if (groupTask != null )
@@ -55,7 +55,18 @@ namespace PRM392_API.Repositories.Implementation
                 }
                 else if (groupTask.Status == "doing")
                 {
-                    groupTask.Status = "done";
+                    if (isUp)
+                    {
+                        groupTask.Status = "todo";
+                    }
+                    else
+                    {
+                        groupTask.Status = "done";
+                    }
+                }
+                else if (groupTask.Status == "done")
+                {
+                    groupTask.Status = "doing";
                 }
                 await _context.SaveChangesAsync();
             }

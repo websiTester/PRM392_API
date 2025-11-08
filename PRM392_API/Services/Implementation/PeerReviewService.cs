@@ -34,8 +34,16 @@ namespace PRM392_API.Services.Implementation
 
         public async Task UpdatePeerReviewAsync(AddReviewRequest request)
         {
-            var peerReview = _mapper.Map<AddReviewRequest, PeerReview>(request);
-            await _peerReviewRepository.UpdateReviewAsync(peerReview);
+            var existingReview = await _peerReviewRepository.GetPeerReviewByIdAsync(
+                request.ReviewerId, request.RevieweeId, request.AssignmentId, request.GroupId);
+
+            if (existingReview == null)
+                throw new Exception("Peer review not found.");
+
+            existingReview.Score = request.Score;
+            existingReview.Comment = request.Comment;
+            existingReview.CreateAt = DateTime.Now;
+            await _peerReviewRepository.UpdateReviewAsync(existingReview);
         }
     }
 }

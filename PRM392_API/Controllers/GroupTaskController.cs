@@ -23,9 +23,9 @@ namespace PRM392_API.Controllers
         }
 
         [HttpPut("UpdateGroupTaskStatus")]
-        public async Task<IActionResult> UpdateStatus([FromQuery] int id)
+        public async Task<IActionResult> UpdateStatus([FromQuery] int id, [FromQuery] bool isUp)
         {
-            await _groupTaskService.UpdateGroupTaskStatus(id);
+            await _groupTaskService.UpdateGroupTaskStatus(id, isUp);
             return Ok();
         }
         [HttpPost]

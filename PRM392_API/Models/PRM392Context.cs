@@ -38,6 +38,7 @@ public partial class PRM392Context : DbContext
 
     public virtual DbSet<StudentGroup> StudentGroups { get; set; }
     public virtual DbSet<AssignmentGrade> AssignmentGrades { get; set; }
+    public DbSet<FCMToken> FCMTokens { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
@@ -46,6 +47,7 @@ public partial class PRM392Context : DbContext
 	}
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
 		modelBuilder.Entity<Assignment>(entity =>
 		{
             entity.HasKey(e => e.Id);
@@ -168,8 +170,18 @@ public partial class PRM392Context : DbContext
 			entity.HasOne(d => d.Student).WithMany(p => p.StudentGroups)
 				.HasForeignKey(d => d.StudentId);
 		});
+        modelBuilder.Entity<FCMToken>()
+            .HasIndex(t => t.Token)
+            .IsUnique(false); 
 
-		OnModelCreatingPartial(modelBuilder);
+        modelBuilder.Entity<FCMToken>()
+            .HasOne(t => t.User)
+            .WithMany(u => u.FcmTokens)
+            .HasForeignKey(t => t.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+
+        OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

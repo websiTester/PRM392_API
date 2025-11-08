@@ -15,6 +15,7 @@ namespace PRM392_API.ProgramConfig
 				cfg.AddProfile<UserProfile>();
 				cfg.AddProfile<PeerReviewProfile>();
 				cfg.AddProfile<AssignmentSubmissionProfile>();
+				cfg.AddProfile<FCMTokenProfile>();
             });
 
             services.AddScoped<IGroupTaskRepository,GroupTaskRepository>();
@@ -25,6 +26,8 @@ namespace PRM392_API.ProgramConfig
 			services.AddScoped<IPeerReviewService, PeerReviewService>();
 			services.AddScoped<IAssignmentSubmissionRepository, AssignmentSubmissionRepository>();
 			services.AddScoped<IAssignmentSubmissionService, AssignmentSubmissionService>();
+			services.AddScoped<IFCMTokenRepository, FCMTokenRepository>();
+			services.AddScoped<IFCMTokenService, FCMTokenService>();
             return services;
 		}
 	}

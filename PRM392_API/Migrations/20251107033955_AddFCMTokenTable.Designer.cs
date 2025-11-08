@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PRM392_API.Models;
 
@@ -11,9 +12,11 @@ using PRM392_API.Models;
 namespace PRM392_API.Migrations
 {
     [DbContext(typeof(PRM392Context))]
-    partial class PRM392ContextModelSnapshot : ModelSnapshot
+    [Migration("20251107033955_AddFCMTokenTable")]
+    partial class AddFCMTokenTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
