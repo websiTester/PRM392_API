@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PRM392_API.DTOs.FCMToken;
+using PRM392_API.Models;
 using PRM392_API.Repositories.Interface;
 using PRM392_API.Services.Interface;
 
@@ -13,6 +14,11 @@ namespace PRM392_API.Services.Implementation
         {
             _fcmTokenRepository = fcmTokenRepository;
             _mapper = mapper;
+        }
+
+        public Task<IEnumerable<FCMToken>> GetTokensByUserIdAsync(int userId)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task SaveTokenAsync(AddFCMTokenRequest addFCMTokenRequest)
