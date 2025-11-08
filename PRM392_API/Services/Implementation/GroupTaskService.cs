@@ -55,9 +55,9 @@ namespace PRM392_API.Services.Implementation
             throw new NotImplementedException();
         }
 
-        public async Task UpdateGroupTaskStatus(int taskId)
+        public async Task UpdateGroupTaskStatus(int taskId, bool isUp)
         {
-            await _groupTaskRepository.UpdateGroupTaskStatus(taskId);
+            await _groupTaskRepository.UpdateGroupTaskStatus(taskId, isUp);
         }
     }
 }

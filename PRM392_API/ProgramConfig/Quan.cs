@@ -13,6 +13,9 @@ namespace PRM392_API.ProgramConfig
 			services.AddScoped<ITeacherClassRepository, TeacherClassRepository>();
 			services.AddScoped<ICourseRepository, CourseRepository>();
 			services.AddScoped<ITeacherClassService,TeacherClassService>();
+			services.AddScoped<IStudentClassService, StudentClassService>();
+			services.AddScoped<IStudentClassRepository, StudentClassRepository>();
+
 			return services;
 		}
 	}

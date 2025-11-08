@@ -37,4 +37,5 @@ public partial class User
 	public virtual ICollection<AssignmentGrade> StudentGrades { get; set; } = new List<AssignmentGrade>();
 
 	public virtual ICollection<AssignmentGrade> TeacherGrades { get; set; } = new List<AssignmentGrade>();
+    public virtual ICollection<FCMToken> FcmTokens { get; set; } = new List<FCMToken>();
 }

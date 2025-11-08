@@ -10,6 +10,6 @@ namespace PRM392_API.Services.Interface
         Task CreateGroupTask(AddGroupTaskRequest addGroupTaskRequest);
         Task<GroupTask?> UpdateGroupTask(GroupTask groupTask);
         Task<bool> DeleteGroupTask(int id);
-        Task UpdateGroupTaskStatus(int taskId);
+        Task UpdateGroupTaskStatus(int taskId, bool isUp);
     }
 }
