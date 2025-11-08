@@ -1,4 +1,6 @@
-﻿namespace PRM392_API.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PRM392_API.ViewModels
 {
     public class ClassListViewModel
     {
@@ -7,5 +9,11 @@
         public string ClassCode { get; set; }
         public string CourseName { get; set; }
         public string TeacherFullName { get; set; }
+    }
+    public class JoinClassViewModel
+    {
+        [Required]
+        [StringLength(10, ErrorMessage = "Mã lớp không được dài quá 10 ký tự.")]
+        public string ClassCode { get; set; }
     }
 }
