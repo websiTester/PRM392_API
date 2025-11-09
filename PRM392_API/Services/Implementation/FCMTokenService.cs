@@ -17,9 +17,9 @@ namespace PRM392_API.Services.Implementation
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<FCMToken>> GetTokensByUserIdAsync(int[] userId)
+        public Task<IEnumerable<FCMToken>> GetTokensByUserIdAsync(int userId)
         {
-            return await _fcmTokenRepository.GetTokensByUserIdAsync(userId);
+            throw new NotImplementedException();
         }
 
         public async Task SaveTokenAsync(AddFCMTokenRequest addFCMTokenRequest)
