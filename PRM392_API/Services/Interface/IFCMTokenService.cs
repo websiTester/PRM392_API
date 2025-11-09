@@ -7,6 +7,6 @@ namespace PRM392_API.Services.Interface
     public interface IFCMTokenService
     {
         Task SaveTokenAsync(AddFCMTokenRequest addFCMTokenRequest);
-        Task<IEnumerable<FCMToken>> GetTokensByUserIdAsync(int userId);
+        Task<IEnumerable<FCMToken>> GetTokensByUserIdAsync(int[] userId);
     }
 }

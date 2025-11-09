@@ -1,4 +1,8 @@
-﻿using PRM392_API.MyProfile;
+﻿using FirebaseAdmin;
+using FirebaseAdmin.Auth;
+using FirebaseAdmin.Messaging;
+using Google.Apis.Auth.OAuth2;
+using PRM392_API.MyProfile;
 using PRM392_API.Repositories.Implementation;
 using PRM392_API.Repositories.Interface;
 using PRM392_API.Services.Implementation;
@@ -28,6 +32,16 @@ namespace PRM392_API.ProgramConfig
 			services.AddScoped<IAssignmentSubmissionService, AssignmentSubmissionService>();
 			services.AddScoped<IFCMTokenRepository, FCMTokenRepository>();
 			services.AddScoped<IFCMTokenService, FCMTokenService>();
+			services.AddScoped<IClassRepository, ClassRepository>();
+			services.AddScoped<IClassService, ClassService>();
+            var firebaseKeyPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "prm392finalproject-5c391-firebase-adminsdk-fbsvc-eeba85de0b.json");
+
+            FirebaseApp.Create(new AppOptions()
+            {
+                Credential = GoogleCredential.FromFile(firebaseKeyPath),
+
+            });
+            services.AddSingleton(FirebaseMessaging.DefaultInstance);
             return services;
 		}
 	}
