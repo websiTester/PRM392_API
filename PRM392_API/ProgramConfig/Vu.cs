@@ -11,7 +11,10 @@ namespace PRM392_API.ProgramConfig
 		{
             services.AddScoped<IGradingRepository, GradingRepository>();
             services.AddScoped<IGradingService, GradingService>();
-            return services;
+            services.AddScoped<IDashboardService, DashboardService>();
+			services.AddScoped<IDashboardRepository, DashboardRepository>();
+
+			return services;
 		}
 	}
 }
