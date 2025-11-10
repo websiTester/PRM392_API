@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Firebase Admin Key
+prm392finalproject-5c391-firebase-adminsdk-fbsvc-eeba85de0b.json

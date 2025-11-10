@@ -27,6 +27,25 @@ namespace PRM392_API.Repositories.Implementation
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<Assignment>> GetAssignmentsNearingDeadline(TimeSpan timeSpan)
+        {
+            var now = DateTime.UtcNow;
+
+            return await _context.Assignments
+                .Where(a => a.Deadline != null &&
+                            a.Deadline >= now &&
+                            a.Deadline <= now.Add(timeSpan))
+                .ToListAsync();
+        }
+
+        public async Task<List<int?>> GetClassByUserId(int userId)
+        {
+            return await _context.StudentClasses
+                .Where(sc => sc.StudentId == userId)
+                .Select(sc => sc.ClassId)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<FCMToken>> GetTokensByUserIdAsync(int[] userIds)
         {
             return await _context.FCMTokens
