@@ -6,5 +6,7 @@ namespace PRM392_API.Repositories.Interface
     {
         Task AddOrUpdateTokenAsync(FCMToken fCMToken);
         Task<IEnumerable<FCMToken>> GetTokensByUserIdAsync(int[] userIds);
+        Task<List<int?>> GetClassByUserId(int userId);
+        Task<IEnumerable<Assignment>> GetAssignmentsNearingDeadline(TimeSpan timeSpan);
     }
 }

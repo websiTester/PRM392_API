@@ -21,21 +21,29 @@ namespace PRM392_API.Controllers
             _classService = classService;
             _fCMTokenService = fCMTokenService;
         }
+        [HttpGet("get-classes")]
+        public async Task<IActionResult> GetClasses(int userId)
+        {
+            var classes = await _fCMTokenService.GetClassByUserId(userId);
+            return Ok(classes);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> SendMessage(int classId)
         {
-            int[] students = await _classService.GetUserIdsByClassIdAsync(classId);
-            if (students == null || !students.Any())
+            var fcmTokens = await _fCMTokenService.GetTokensFromFirebaseAsync(classId);
+            if (fcmTokens == null)
             {
-                return Ok(new { Message = "No students in this class." });
+                return Ok(new { Message = "No valid FCM tokens found for these students." });
+            }
+            foreach (var token in fcmTokens)
+            {
+                Console.WriteLine("FCM Token: " + token);
             }
 
-            var fcmTokens = await _fCMTokenService.GetTokensByUserIdAsync(students);
 
-            var tokenStrings = fcmTokens.Select(t => t.Token).ToList();
-
-            if (!tokenStrings.Any())
+            if (!fcmTokens.Any())
             {
                 return Ok(new { Message = "No valid FCM tokens found for these students." });
             }
@@ -46,15 +54,22 @@ namespace PRM392_API.Controllers
                     Title = "Bạn có bài tập mới!",
                     Body = "Admin vừa thêm bài tập"
                 },
-                Tokens = tokenStrings
+                Tokens = fcmTokens.ToList(),
             };
 
+            var outOfDateMessage = new MulticastMessage()
+            {
+                Notification = new Notification
+                {
+                    Title = "Bài tập sắp hết hạn",
+                    Body = "Bài tập sắp hết hạn"
+                },
+                Tokens = fcmTokens.ToList(),
+
+            };
             try
             {
                 BatchResponse response = await _firebaseMessaging.SendEachForMulticastAsync(message);
-
-                Console.WriteLine($"Successfully sent to: {response.SuccessCount} tokens");
-                Console.WriteLine($"Failed to send to: {response.FailureCount} tokens");
                 if (response.FailureCount > 0)
                 {
                     var failedTokens = new List<string>();
@@ -62,7 +77,7 @@ namespace PRM392_API.Controllers
                     {
                         if (!response.Responses[i].IsSuccess)
                         {
-                            failedTokens.Add(tokenStrings[i]);
+                            failedTokens.Add(fcmTokens.ToList()[i]);
                         }
                     }
                     Console.WriteLine("Failed tokens: " + string.Join(", ", failedTokens));

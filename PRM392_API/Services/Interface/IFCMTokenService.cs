@@ -7,6 +7,8 @@ namespace PRM392_API.Services.Interface
     public interface IFCMTokenService
     {
         Task SaveTokenAsync(AddFCMTokenRequest addFCMTokenRequest);
-        Task<IEnumerable<FCMToken>> GetTokensByUserIdAsync(int[] userId);
+        Task<IEnumerable<string>?> GetTokensFromFirebaseAsync(int classId);
+        Task<List<int?>> GetClassByUserId(int userId);
+        Task<IEnumerable<Assignment>> GetAssignmentsNearingDeadline(TimeSpan timeSpan);
     }
 }
