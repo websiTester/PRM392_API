@@ -7,5 +7,7 @@
         public string Description { get; set; }
         public DateTime? Deadline { get; set; }
         public bool IsGroupAssignment { get; set; }
+        public string StudentGradeDisplay { get; set; }
+        public List<GroupGradeViewModel> GroupGrades { get; set; }
     }
 }
