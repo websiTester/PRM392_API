@@ -42,7 +42,7 @@ namespace PRM392_API.Repositories.Implementation
 
         public List<UListViewModel> GetUserList()
         {
-            var users = _context.Users.ToList();   // query DB trước
+            var users = _context.Users.OrderByDescending(u => u.isActive).ToList();   // query DB trước
 
             return users
                 .Select(u => new UListViewModel
