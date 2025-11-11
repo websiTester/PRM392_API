@@ -27,74 +27,11 @@ namespace PRM392_API.Controllers
             var classes = await _fCMTokenService.GetClassByUserId(userId);
             return Ok(classes);
         }
-
-
-        [HttpPost]
-        public async Task<IActionResult> SendMessage(int classId)
+        [HttpGet("get-groupId")]
+        public async Task<IActionResult> GetGroupId(int classId, int userId)
         {
-            var fcmTokens = await _fCMTokenService.GetTokensFromFirebaseAsync(classId);
-            if (fcmTokens == null)
-            {
-                return Ok(new { Message = "No valid FCM tokens found for these students." });
-            }
-            foreach (var token in fcmTokens)
-            {
-                Console.WriteLine("FCM Token: " + token);
-            }
-
-
-            if (!fcmTokens.Any())
-            {
-                return Ok(new { Message = "No valid FCM tokens found for these students." });
-            }
-            var message = new MulticastMessage()
-            {
-                Notification = new Notification
-                {
-                    Title = "Bạn có bài tập mới!",
-                    Body = "Admin vừa thêm bài tập"
-                },
-                Tokens = fcmTokens.ToList(),
-            };
-
-            var outOfDateMessage = new MulticastMessage()
-            {
-                Notification = new Notification
-                {
-                    Title = "Bài tập sắp hết hạn",
-                    Body = "Bài tập sắp hết hạn"
-                },
-                Tokens = fcmTokens.ToList(),
-
-            };
-            try
-            {
-                BatchResponse response = await _firebaseMessaging.SendEachForMulticastAsync(message);
-                if (response.FailureCount > 0)
-                {
-                    var failedTokens = new List<string>();
-                    for (int i = 0; i < response.Responses.Count; i++)
-                    {
-                        if (!response.Responses[i].IsSuccess)
-                        {
-                            failedTokens.Add(fcmTokens.ToList()[i]);
-                        }
-                    }
-                    Console.WriteLine("Failed tokens: " + string.Join(", ", failedTokens));
-                }
-
-                return Ok(new
-                {
-                    Message = "Notifications sent.",
-                    SuccessCount = response.SuccessCount,
-                    FailureCount = response.FailureCount
-                });
-            }
-            catch (FirebaseMessagingException ex)
-            {
-                Console.WriteLine("Error sending multicast message: " + ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to send notifications.");
-            }
+            var groupId = await _fCMTokenService.GetGroupIdByStudentIdAndClassId(classId, userId);
+            return Ok(groupId);
         }
     }
 }
