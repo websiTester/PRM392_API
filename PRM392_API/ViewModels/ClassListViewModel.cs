@@ -12,6 +12,7 @@ namespace PRM392_API.ViewModels
     }
     public class JoinClassViewModel
     {
+       public int studentId { get; set; }
         [Required]
         [StringLength(10, ErrorMessage = "Mã lớp không được dài quá 10 ký tự.")]
         public string ClassCode { get; set; }
