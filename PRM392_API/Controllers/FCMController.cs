@@ -28,7 +28,7 @@ namespace PRM392_API.Controllers
             return Ok(classes);
         }
         [HttpGet("get-groupId")]
-        public async Task<IActionResult> GetGroupId(int classId, int userId)
+        public async Task<IActionResult> GetGroupId([FromQuery]int classId, [FromQuery] int userId)
         {
             var groupId = await _fCMTokenService.GetGroupIdByStudentIdAndClassId(classId, userId);
             return Ok(groupId);
