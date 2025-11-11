@@ -10,5 +10,6 @@ namespace PRM392_API.Services.Interface
         Task<IEnumerable<string>?> GetTokensFromFirebaseAsync(int classId);
         Task<List<int?>> GetClassByUserId(int userId);
         Task<IEnumerable<Assignment>> GetAssignmentsNearingDeadline(TimeSpan timeSpan);
+        Task<int?> GetGroupIdByStudentIdAndClassId(int studentId, int classId);
     }
 }

@@ -13,5 +13,6 @@ namespace PRM392_API.Repositories.Interface
         Task AddStudentToGroupAsync(int groupId, int studentId);
         Task RemoveStudentFromGroupAsync(int groupId, int studentId);
         Task<IEnumerable<Group>> GetGroupsByClassIdWithMembersAsync(int classId);
+        Task<int?> GetGroupIdByStudentIdAsync(int studentId, int classId);
     }
 }
