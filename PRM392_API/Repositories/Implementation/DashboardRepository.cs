@@ -42,7 +42,7 @@ namespace PRM392_API.Repositories.Implementation
 
         public List<UListViewModel> GetUserList()
         {
-            var users = _context.Users.OrderByDescending(u => u.isActive).ToList();   // query DB trước
+            var users = _context.Users.Where(u => u.RoleId != 3).OrderByDescending(u => u.isActive).ToList();   // query DB trước
 
             return users
                 .Select(u => new UListViewModel
@@ -73,8 +73,9 @@ namespace PRM392_API.Repositories.Implementation
         {
             return roleId switch
             {
-                1 => "Giảng viên",
-                2 => "Học viên",
+                2 => "Giảng viên",
+                1 => "Học viên",
+                3 => "Admin",
                 _ => "Khác"
             };
         }
