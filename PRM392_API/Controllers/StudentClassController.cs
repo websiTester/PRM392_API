@@ -19,7 +19,7 @@ namespace PRM392_API.Controllers
         }
 
         [HttpGet("GetClasses")]
-        public async Task<IActionResult> GetClasses()
+        public async Task<IActionResult> GetClasses([FromQuery] int studentId)
         {
             //User user = await _userManager.GetUserAsync(User);
 
@@ -30,9 +30,8 @@ namespace PRM392_API.Controllers
 
 
 
-            int currentUserId = 107;
 
-            IEnumerable<StudentClassListDto> studentClasses = _studentClassService.GetClassesByStudentId(currentUserId);
+            IEnumerable<StudentClassListDto> studentClasses = _studentClassService.GetClassesByStudentId(studentId);
 
             return Ok(studentClasses);
         }
@@ -48,7 +47,7 @@ namespace PRM392_API.Controllers
             //    return Unauthorized(new { success = false, message = "Bạn cần đăng nhập để tham gia lớp." });
             //}
 
-            var result = _studentClassService.JoinClass(107, model.ClassCode);
+            var result = _studentClassService.JoinClass(model.studentId, model.ClassCode);
 
             if (result.success)
             {

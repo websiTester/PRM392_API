@@ -51,6 +51,14 @@ namespace PRM392_API.Repositories.Implementation
             return await _context.Groups.FindAsync(groupId);
         }
 
+        public async Task<int?> GetGroupIdByStudentIdAsync(int studentId, int classId)
+        {
+            return await _context.StudentGroups
+                .Where(sg => sg.StudentId == studentId && sg.Group.ClassId == classId)
+                .Select(sg => sg.GroupId)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<Group>> GetGroupsByClassIdAsync(int classId)
         {
             return await _context.Groups

@@ -12,7 +12,6 @@ namespace PRM392_API.Controllers
     [ApiController]
     public class TeacherClassController : ControllerBase
     {
-        private const int MOCK_TEACHER_ID = 101;
 
         private readonly ITeacherClassService _classService;
         private readonly ICourseRepository _courseRepository;
@@ -23,10 +22,10 @@ namespace PRM392_API.Controllers
             _courseRepository = courseRepository;
         }
         [HttpGet("TeacherHome")]
-        public async Task<IActionResult> TeacherHome()
+        public async Task<IActionResult> TeacherHome([FromQuery]int teacherId)
         {
             // Giả định User ID = 101
-            int teacherId = MOCK_TEACHER_ID;
+            
 
             IEnumerable<ClassListViewModel> teacherClasses = _classService.GetClassesByTeacherId(teacherId);
             IEnumerable<Course> allCourses = _courseRepository.GetCoursesByTeacherId(teacherId);
@@ -48,8 +47,8 @@ namespace PRM392_API.Controllers
             //{
             //    return Unauthorized(new { success = false, message = "Bạn cần đăng nhập để tạo lớp." });
             //}
-
-            model.TeacherId = 101;
+            Console.WriteLine("-================================================="+model.TeacherId);
+            
             var result = _classService.CreateNewClass(model);
 
             if (result.success)

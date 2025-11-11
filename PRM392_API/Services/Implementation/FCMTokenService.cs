@@ -13,12 +13,14 @@ namespace PRM392_API.Services.Implementation
     public class FCMTokenService : IFCMTokenService
     {
         private readonly IFCMTokenRepository _fcmTokenRepository;
+        private readonly IGroupRepository _groupRepository;
         private readonly IMapper _mapper;
         private readonly HttpClient _httpClient = new HttpClient();
         
-        public FCMTokenService(IFCMTokenRepository fcmTokenRepository, IMapper mapper)
+        public FCMTokenService(IFCMTokenRepository fcmTokenRepository, IGroupRepository groupRepository, IMapper mapper)
         {
             _fcmTokenRepository = fcmTokenRepository;
+            _groupRepository = groupRepository;
             _mapper = mapper;
         }
 
@@ -70,6 +72,11 @@ public async Task<IEnumerable<string>?> GetTokensFromFirebaseAsync(int classId)
         public async Task<IEnumerable<Assignment>> GetAssignmentsNearingDeadline(TimeSpan timeSpan)
         {
             return await _fcmTokenRepository.GetAssignmentsNearingDeadline(timeSpan);
+        }
+
+        public async Task<int?> GetGroupIdByStudentIdAndClassId(int studentId, int classId)
+        {
+            return await _groupRepository.GetGroupIdByStudentIdAsync(studentId, classId);
         }
     }
 }
