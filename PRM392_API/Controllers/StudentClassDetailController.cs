@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PRM392_API.Services.Interface;
+using PRM392_API.RequestModel;
 
 namespace PRM392_API.Controllers
 {
@@ -8,39 +9,35 @@ namespace PRM392_API.Controllers
     [ApiController]
     public class StudentClassDetailController : ControllerBase
     {
-        // ID giả lập CỐ ĐỊNH cho Học sinh
-        private const int MOCK_STUDENT_ID = 102;
+        // private const int MOCK_STUDENT_ID = 102;
 
-        private readonly IClassDetailService _classService;
+        private readonly IClassDetailService _classService;
 
         public StudentClassDetailController(IClassDetailService classService)
         {
             _classService = classService;
         }
 
-        // GET: api/student-class-detail/1
-        [HttpGet("{classId}")]
-        public async Task<IActionResult> GetClassDetail(int classId)
+        [HttpGet("{classId}")]
+        public async Task<IActionResult> GetClassDetail(int classId, [FromQuery] int userId)
         {
-            var vm = await _classService.GetClassDetailForStudentAsync(classId, MOCK_STUDENT_ID);
+            var vm = await _classService.GetClassDetailForStudentAsync(classId, userId);
             if (vm == null) return NotFound(new { message = "Không tìm thấy lớp học." });
             return Ok(vm);
         }
 
-        // POST: api/student-class-detail/groups/10/join
-        [HttpPost("groups/{groupId}/join")]
-        public async Task<IActionResult> JoinGroup(int groupId)
+        [HttpPost("groups/{groupId}/join")]
+        public async Task<IActionResult> JoinGroup(int groupId, [FromBody] StudentGroupActionRequest request)
         {
-            var result = await _classService.JoinGroupAsync(groupId, MOCK_STUDENT_ID);
+            var result = await _classService.JoinGroupAsync(groupId, request.UserId);
             if (!result) return BadRequest(new { message = "Bạn đã ở trong nhóm khác." });
             return Ok(new { message = "Tham gia nhóm thành công." });
         }
 
-        // POST: api/student-class-detail/groups/10/leave
-        [HttpPost("groups/{groupId}/leave")]
-        public async Task<IActionResult> LeaveGroup(int groupId)
+        [HttpPost("groups/{groupId}/leave")]
+        public async Task<IActionResult> LeaveGroup(int groupId, [FromBody] StudentGroupActionRequest request)
         {
-            await _classService.LeaveGroupAsync(groupId, MOCK_STUDENT_ID);
+            await _classService.LeaveGroupAsync(groupId, request.UserId);
             return Ok(new { message = "Rời nhóm thành công." });
         }
     }

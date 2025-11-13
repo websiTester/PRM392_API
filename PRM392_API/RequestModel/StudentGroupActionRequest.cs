@@ -1,8 +1,7 @@
 ﻿namespace PRM392_API.RequestModel
 {
-    public class CreateGroupRequest
+    public class StudentGroupActionRequest
     {
-        public string GroupName { get; set; }
         public int UserId { get; set; }
     }
 }
