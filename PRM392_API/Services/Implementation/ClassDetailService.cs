@@ -12,11 +12,15 @@ namespace PRM392_API.Services.Implementation
         private readonly IAssignmentRepository _assignmentRepo;
         private readonly IGroupRepository _groupRepo;
 
-        public ClassDetailService(IClassDetailRepository classRepo, IAssignmentRepository assignmentRepo, IGroupRepository groupRepo)
+        private readonly IAssignmentSubmissionRepository _submissionRepo;
+
+        public ClassDetailService(IClassDetailRepository classRepo, IAssignmentRepository assignmentRepo, IGroupRepository groupRepo, 
+            IAssignmentSubmissionRepository submissionRepo)
         {
             _classRepo = classRepo;
             _assignmentRepo = assignmentRepo;
             _groupRepo = groupRepo;
+            _submissionRepo = submissionRepo;
         }
 
         private ClassMemberViewModel MapUserToMemberModel(User user)
@@ -111,6 +115,24 @@ namespace PRM392_API.Services.Implementation
 
             var currentGroup = await _groupRepo.GetStudentGroupInClassAsync(classId, studentId);
 
+            var assignmentViewModels = new List<AssignmentViewModel>();
+
+            foreach (var a in assignments)
+            {
+                var studentGrade = await _submissionRepo.GetStudentGradeDisplayForAssignmentAsync(a.Id, studentId);
+
+                assignmentViewModels.Add(new AssignmentViewModel
+                {
+                    Id = a.Id,
+                    Title = a.Title,
+                    Description = a.Description,
+                    Deadline = a.Deadline,
+                    IsGroupAssignment = a.IsGroupAssignment ?? false,
+
+                    StudentGradeDisplay = studentGrade
+                });
+            }
+
             var vm = new ClassDetailStudentViewModel
             {
                 ClassId = aClass.ClassId,
@@ -119,14 +141,7 @@ namespace PRM392_API.Services.Implementation
                 Teacher = MapUserToMemberModel(aClass.Teacher),
                 CurrentUserGroupId = currentGroup?.GroupId,
 
-                Assignments = assignments.Select(a => new AssignmentViewModel
-                {
-                    Id = a.Id,
-                    Title = a.Title,
-                    Description = a.Description,
-                    Deadline = a.Deadline,
-                    IsGroupAssignment = a.IsGroupAssignment ?? false
-                }).ToList(),
+                Assignments = assignmentViewModels,
 
                 Groups = groups.Select(g => new GroupViewModel
                 {
@@ -145,31 +160,39 @@ namespace PRM392_API.Services.Implementation
             var aClass = await _classRepo.GetClassByIdAsync(classId);
             if (aClass == null) return null;
 
-            var assignments = await _assignmentRepo.GetAssignmentsByClassIdAsync(classId);
-
             var groups = await _groupRepo.GetGroupsByClassIdWithMembersAsync(classId);
-
             var students = await _classRepo.GetStudentsByClassIdAsync(classId);
 
-            var vm = new ClassDetailTeacherViewModel
+            var assignments = await _assignmentRepo.GetAssignmentsByClassIdAsync(classId);
+            var assignmentViewModels = new List<AssignmentViewModel>();
+
+            foreach (var a in assignments)
             {
-                ClassId = aClass.ClassId,
-                ClassName = aClass.ClassName,
-                ClassCode = aClass.ClassCode,
-                Teacher = MapUserToMemberModel(aClass.Teacher),
+                var groupGrades = await _submissionRepo.GetGroupGradesForAssignmentAsync(a.Id);
 
-                AllStudents = students.Select(MapUserToMemberModel).ToList(),
-
-                Assignments = assignments.Select(a => new AssignmentViewModel
+                assignmentViewModels.Add(new AssignmentViewModel
                 {
                     Id = a.Id,
                     Title = a.Title,
                     Description = a.Description,
                     Deadline = a.Deadline,
-                    IsGroupAssignment = a.IsGroupAssignment ?? false
-                }).ToList(),
+                    IsGroupAssignment = a.IsGroupAssignment ?? false,
 
-                Groups = groups.Select(g => new GroupViewModel
+                    GroupGrades = groupGrades
+                });
+            }
+
+            var vm = new ClassDetailTeacherViewModel
+            {
+                ClassId = aClass.ClassId,
+                ClassName = aClass.ClassName,
+                ClassCode = aClass.ClassCode,
+                Teacher = MapUserToMemberModel(aClass.Teacher),
+                AllStudents = students.Select(MapUserToMemberModel).ToList(),
+
+                Assignments = assignmentViewModels,
+
+                Groups = groups.Select(g => new GroupViewModel
                 {
                     GroupId = g.GroupId,
                     GroupName = g.GroupName,
