@@ -20,6 +20,8 @@ namespace PRM392_API.Controllers
 		[HttpPost("Login")]
 		public async Task<IActionResult> Login([FromBody] LoginViewModel model)
 		{
+			int a = 1;
+			int b = 2;
 			if(!ModelState.IsValid)
 			{
 				// Authentication logic here
