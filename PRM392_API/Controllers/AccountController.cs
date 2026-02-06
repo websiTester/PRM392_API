@@ -22,6 +22,7 @@ namespace PRM392_API.Controllers
 		{
 			int a = 1;
 			int b = 2;
+			int c = 3;
 			if(!ModelState.IsValid)
 			{
 				// Authentication logic here
